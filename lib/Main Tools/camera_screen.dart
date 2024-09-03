@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:image/image.dart' as img;
 import 'package:google_ml_kit/google_ml_kit.dart'; // Import google_ml_kit
 
-import '../includes/Frame_Corner.dart'; // Import the new file here
-
 class CameraScreen extends StatefulWidget {
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -224,13 +222,20 @@ class _CameraScreenState extends State<CameraScreen> {
                 ),
               ),
               Expanded(
-                child: Text(
-                  line,
+                child: TextField(
+                  controller: TextEditingController(text: line),
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Courier',
                     fontSize: 16,
                   ),
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                  onChanged: (value) {
+                    // Handle text changes here if necessary
+                  },
                 ),
               ),
             ],
@@ -270,7 +275,6 @@ class _CameraScreenState extends State<CameraScreen> {
                     ),
                   ),
                   CustomPaint(
-                    painter: CornerPainter(color: frameColor),
                     child: Container(
                       width: constraints.maxWidth,
                       height: height,
@@ -288,12 +292,11 @@ class _CameraScreenState extends State<CameraScreen> {
                       ),
                     ),
                   ),
-                  // Centered Snap Button with top margin
-                  if (showSnapButton || showRetakeButton) // Show button conditionally
+                  if (showSnapButton || showRetakeButton)
                     Align(
                       alignment: Alignment.center,
                       child: Container(
-                        margin: EdgeInsets.only(top: 100), // Adjust the top margin as needed
+                        margin: EdgeInsets.only(top: 100),
                         child: ElevatedButton(
                           onPressed: showSnapButton ? _snapImage : _retakeImage,
                           style: ElevatedButton.styleFrom(
@@ -304,7 +307,7 @@ class _CameraScreenState extends State<CameraScreen> {
                             ),
                           ),
                           child: Text(
-                            showSnapButton ? 'Snap Code' : 'Retake Photo', // Change text based on button state
+                            showSnapButton ? 'Snap Code' : 'Retake Photo',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
